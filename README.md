@@ -18,10 +18,6 @@ The assignments in this repository correspond to the problem sets provided in th
 - Symmetries and Noether’s theorem
 - Renormalization and loop corrections
 
-Each assignment folder contains:
-- **Problem Set(PDF)**: The original problem statement
-- **Solutions**: Detailed solutions or guidance for solving problems
-
 ## How to Use This Repository
 1. Navigate to the assignment folder of interest.
 2. Read the problem set.
