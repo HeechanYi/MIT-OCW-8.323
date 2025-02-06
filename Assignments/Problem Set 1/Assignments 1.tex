@@ -1,0 +1,683 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[left=2.5cm,right=2.5cm,top=3.5cm,bottom=3.5cm,a4paper]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{color}
+\usepackage{kotex}
+\usepackage{helvet}
+\usepackage{amsmath, amssymb, amsthm, mathtools}
+\setlength{\parindent}{0pt}
+\usepackage{color}
+\usepackage{array}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+\renewcommand{\baselinestretch}{1.15}	                 % for title box horizontal space
+\usepackage{tabularx}				  	 % for better rules in the table
+\usepackage{enumitem}					 % for custom enumerate
+\usepackage{minted}				         % for source-code with math formulas
+\usepackage{romannum}
+
+\newenvironment{tinyitem}
+{\begin{itemize}[label={\tiny\(\bullet\)}]}
+{\end{itemize}}
+
+\newlist{numlist}{enumerate}{10}
+\newcommand*\parenthesize[1]{(#1)}
+\setlist[numlist]{label*=.\arabic*,format=\parenthesize,leftmargin=2em}
+\setlist[numlist,1]{label=\arabic*}
+
+\newlist{alphlist}{enumerate}{10}
+\setlist[alphlist]{label*=.\arabic*,format=\parenthesize,leftmargin=2em}
+\setlist[alphlist,1]{label=\alph*}
+
+\newcommand{\newproblem}[2]
+{\vspace{24pt} \Large{\textbf{#1.}} ({\it #2 points})}
+
+\title{Assignment \#1}
+\author{Heechan Yi}
+\makeatletter 			% for author, title reference
+
+\begin{document}
+    \begin{tabularx}{\textwidth}{|X|}
+	\hline
+	\textsf{\bf MIT OCW 8.323: Quantum Field Theory \Romannum{1}} \hfill \\\
+		
+	\hfil {\LARGE \sf \@title \small{(\today)} } \hfil \\\
+
+	{\hfill \@author} \\
+        \hline
+    \end{tabularx}
+\\
+\\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%Problem 1%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\textbf{1. Review : Quantum Harmonic Oscillator in the Heisenberg Picture}\\
+\textcolor{blue}{
+Consider the Hamiltonian for a unit mass harmonic oscillator with frequency $\omega$
+\begin{equation}\label{eqn:1.1}
+    H = \frac{1}{2} \left( \hat{p}^2 + \omega^2\hat{x}^2 \right)
+\end{equation}
+In the Heisenberg picture $\hat{p}(t)$ and $\hat{x}(t)$ are dynamical variables which evolve with time. They obey the equal-time commutation relation
+\begin{equation}\label{eqn:1.2}
+    [\hat{x}(t), \hat{p}(t)] = i
+\end{equation}
+Here and below we set $\hbar = 1$.
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%Problem 1.(a)%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}
+    \item [(a)] \textcolor{blue}{Obtain the Heisenberg evolution equation for $\hat{x}(t)$ and $\hat{p}(t)$.}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+From Heisenberg equation of motion, we can know that an operator in Heisenberg picture follows below:
+$$
+\frac{d}{dt}\hat{A}(t) = i[H, \hat{A}(t)]
+$$
+So, $\hat{x}(t)$ is :
+\begin{align}
+    \frac{d}{dt}\hat{x}(t) = i[H, \hat{x}(t)] & = i \left( \frac{1}{2} [\hat{p}^2+\omega^2 x^2, \hat{x}] \right) \\
+    & = \frac{i}{2} [\hat{p}^2, \hat{x} ] \\
+    & = \frac{i}{2} \left(  \hat{p}[\hat{p}, \hat{x}] + [\hat{p}, \hat{x}]\hat{p} \right) \\
+    & = \frac{i}{2} \times (-2i\hat{p}) \\
+    & = \hat{p}(t)
+\end{align}
+And $\hat{p}(t)$ is:
+\begin{align}
+    \frac{d}{dt}\hat{p}(t) = i[H, \hat{p}(t)] & = i \left( \frac{1}{2} [\hat{p}^2+\omega^2 x^2, \hat{p}] \right) \\
+    & = \frac{i}{2} [\omega^2\hat{x}^2, \hat{p} ] \\
+    & = \frac{i}{2} \omega^2 \left( \hat{x}[\hat{x}, \hat{p}] + [\hat{x}, \hat{p}]\hat{x} \right) \\
+    & = \frac{i}{2} \omega^2 \times (2i\hat{x}) \\
+    & = - \omega^2 \hat{x}(t)
+\end{align}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%Problem 1.(b)%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}
+    \item [(b)] \textcolor{blue}{Suppose the initial condition at $t=0$ are given by 
+    \begin{equation}\label{eqn:1.3}
+        \hat{x}(0) = \hat{x},\quad \hat{p}(0) = \hat{p}
+    \end{equation} find $\hat{x}(t)$ and $\hat{p}(t)$.
+    }
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+From Pb.1.(a), we solve that
+\begin{align}
+    \frac{d}{dt}\hat{x}(t) = \hat{p}(t) \\
+    \frac{d}{dt}\hat{p}(t) = - \omega^2 \hat{x}(t)
+\end{align}
+Combining the two differential equation to solve $\hat{x}(t)$, we can summarize it:
+\begin{equation}
+    \frac{d^2}{dt^2} x(t) = - \omega^2x(t)
+\end{equation}
+Then we can guess a general solution of $\hat{x}(t)$:
+\begin{equation}
+    \hat{x}(t) = Ae^{i \omega t}+Be^{-i\omega t}
+\end{equation}
+such that
+\begin{equation}
+    \hat{p}(t) = i A \omega e^{i \omega t}-i B \omega e^{-i \omega t}
+\end{equation}
+Given initial condition (Eqn.(\ref{eqn:1.3}))
+\begin{align}
+    A+B = \hat{x} \\
+    i\omega(A - B) = \hat{p}
+\end{align}
+Then,
+\begin{align}
+    A = \frac{1}{2}\left( \hat{x} + \frac{\hat{p}}{i\omega} \right)\\
+    A = \frac{1}{2}\left( \hat{x} - \frac{\hat{p}}{i\omega} \right)
+\end{align}
+So, $\hat{x}(t)$ and $\hat{p}(t)$ are summarized
+\begin{align}
+    \hat{x}(t) & = \frac{1}{2}\left( \left( \hat{x} + \frac{\hat{p}}{i\omega} \right) e^{i \omega t} + \left( \hat{x} - \frac{\hat{p}}{i\omega} \right) e^{-i \omega t} \right) & = \hat{x}\cos \omega t + \frac{\hat{p}}{\omega}\sin{\omega t} \\
+    \hat{p}(t) & = \frac{i \omega}{2}\left( \left(\hat{x} + \frac{\hat{p}}{i\omega} \right) e^{i \omega t} - \left(\hat{x} - \frac{\hat{p}}{i\omega} \right) e^{-i \omega t} \right) & = -\omega \hat{x}\sin \omega t + \hat{p}\cos{\omega t}
+\end{align}
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%Problem 1.(c)%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}
+    \item [(c)] \textcolor{blue}{
+    It is convenient to introduce operators $\hat{a}(t)$, $\hat{a}^\dagger(t)$ defined by
+    \begin{equation}\label{eqn:1.4}
+        \hat{x}(t) = \sqrt{\frac{1}{2\omega}}\left( \hat{a}(t) + \hat{a}^\dagger(t) \right), \quad \hat{p}(t) = -i\sqrt{\frac{\omega}{2}}\left( \hat{a}(t) - \hat{a}^\dagger(t) \right)
+    \end{equation}
+    Show that $\hat{a}(t)$ and $\hat{a}^\dagger(t)$ satisfying equal-time commutation relation
+    \begin{equation}\label{eqn:1.5}
+        [\hat{a}(t), \hat{a}^\dagger(t)] = 1
+    \end{equation}
+    }
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+From the definition(Eqn.(\ref{eqn:1.4})), we can rewrite that:
+\begin{align}
+    \hat{a}(t) + \hat{a}^\dagger(t) = \sqrt{2\omega} \hat{x}(t) \\
+    \hat{a}(t) - \hat{a}^\dagger(t) = i\sqrt{\frac{2}{\omega}}\hat{p}(t)
+\end{align}
+then, we can write down $\hat{a}(t)$ and $\hat{a}^\dagger(t)$ in terms of $\hat{x}(t)$ and $\hat{p}(t)$:
+\begin{align}
+    \hat{a}(t) & = \frac{1}{\sqrt{2\omega}} \left( \omega \hat{x}(t) + i\hat{p}(t) \right) \\
+    \hat{a}^\dagger(t) & = \frac{1}{\sqrt{2\omega}} \left( \omega \hat{x}(t) - i\hat{p}(t) \right)
+\end{align}
+Using the commutation relation in Eqn.(\ref{eqn:1.2}):
+\begin{align}
+    [\hat{a}(t), \hat{a}^\dagger(t)] & = \frac{1}{2\omega} [\omega \hat{x}(t) + i\hat{p}(t), \omega \hat{x}(t) - i\hat{p}(t)] \\
+    & = \frac{1}{2\omega}\left( [\omega \hat{x}(t),  - i\hat{p}(t)] + [i\hat{p}(t), \omega \hat{x}(t)]\right) \\
+    & = \frac{1}{2\omega} \times 2 \omega \\
+    & = 1
+\end{align}
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%Problem 1.(d)%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}
+    \item [(d)] \textcolor{blue}{
+    Express the Hamiltonian in terms of $\hat{a}(t)$ and $\hat{a}^\dagger(t)$.
+    }
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Firstly, expand $\hat{x}^2(t)$ and $\hat{p}^2(t)$ in terms of $\hat{a}(t)$ and $\hat{a}^\dagger(t)$:
+\begin{align}
+    \hat{x}^2(t) & = \frac{1}{2\omega} \left( \hat{a}^2(t) + \hat{a}(t)\hat{a}^\dagger(t) + \hat{a}^\dagger(t)\hat{a}(t) + \hat{a}^{\dagger^2}(t)\right) \\
+    \omega^2 \hat{x}^2(t) & = \frac{\omega}{2} \left( \hat{a}^2(t) + \hat{a}(t)\hat{a}^\dagger(t) + \hat{a}^\dagger(t)\hat{a}(t) + \hat{a}^{\dagger^2}(t)\right)
+\end{align}
+and
+\begin{equation}
+    \hat{p}^2(t) = -\frac{\omega}{2} \left( \hat{a}^2(t) - \hat{a}(t)\hat{a}^\dagger(t) - \hat{a}^\dagger(t)\hat{a}(t) + \hat{a}^{\dagger^2}(t)\right)
+\end{equation}
+Using the commutation relation from Pb. 1.(c) Eqn.(\ref{eqn:1.5}), we know that
+\begin{equation}
+    [\hat{a}(t), \hat{a}^\dagger(t)] = 1 \Rightarrow \hat{a}(t)\hat{a}^\dagger(t) -\hat{a}^\dagger(t)\hat{a}(t) = 1 \Rightarrow \hat{a}(t)\hat{a}^\dagger(t) = \hat{a}^\dagger(t)\hat{a}(t) + 1
+\end{equation}
+Therefore, the Hamiltonian(Eqn.(\ref{eqn:1.1})) can be expressed:
+\begin{align}
+    H = \frac{1}{2} (\hat{p}^2 + \omega^2 \hat{x}^2) & = \frac{\omega}{4} \left( 2(\hat{a}(t)\hat{a}^\dagger(t) +\hat{a}^\dagger(t)\hat{a}(t)) \right)\\
+    & = \frac{\omega}{2}\left( 2\hat{a}^\dagger(t)\hat{a}(t) + 1 \right)\\
+    & = \omega \left( \hat{a}^\dagger(t)\hat{a}(t) + \frac{1}{2} \right)
+\end{align}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%Problem 1.(e)%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}
+    \item [(e)] \textcolor{blue}{
+    Obtain the Heisenberg equations for $\hat{a}(t)$ and $\hat{a}^\dagger(t)$.
+    }
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Same process as solving Pb. 1(a),
+\begin{align}
+    \frac{d}{dt} \hat{a}(t) = i[H, \hat{a}(t)] \\
+    \frac{d}{dt} \hat{a}^\dagger(t) = i[H, \hat{a}^\dagger(t)]
+\end{align}
+Then, using expasion of the Hamiltonian $H$ in terms of $\hat{a}(t)$ and $\hat{a}^\dagger(t)$ and the commutation relation from Eqn.(\ref{eqn:1.5})
+\begin{align}
+    \frac{d}{dt} \hat{a}(t) & = i\left[\omega \left( \hat{a}^\dagger(t)\hat{a}(t) + \frac{1}{2} \right), \hat{a}(t)\right] & = i\omega [\hat{a}^\dagger(t)\hat{a}(t), \hat{a}(t)] \\
+    \frac{d}{dt} \hat{a}^\dagger(t) & = i\left[\omega \left( \hat{a}^\dagger(t)\hat{a}(t) + \frac{1}{2} \right), \hat{a}^\dagger(t)\right] & = i\omega [\hat{a}^\dagger(t)\hat{a}(t), \hat{a}^\dagger(t)]
+\end{align}
+rewriting the commutation,
+\begin{align}
+    \frac{d}{dt} \hat{a}(t) & = i\omega(\hat{a}^\dagger(t)\hat{a}(t)\hat{a}(t) - \hat{a}(t)\hat{a}^\dagger(t)\hat{a}(t)\hat{a}(t)) & = i\omega[\hat{a}^\dagger(t), \hat{a}]\hat{a} & = -i\omega\hat{a}(t)\\
+    \frac{d}{dt} \hat{a}^\dagger(t) & = i\omega(\hat{a}^\dagger(t)\hat{a}(t)\hat{a}^\dagger(t) - \hat{a}^\dagger(t)\hat{a}^\dagger(t)\hat{a}(t)) & = i\omega \hat{a}^\dagger(t) [\hat{a}(t), \hat{a}^\dagger(t)] & = i\omega \hat{a}^\dagger(t)
+\end{align}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%Problem 1.(f)%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}
+    \item [(f)] \textcolor{blue}{
+    Suppose the initial condition at $t = 0$ are given by
+    \begin{equation}\label{eqn:1.6}
+        \hat{a}(0) = \hat{a},\quad \hat{a}^{\dagger}(0) = \hat{a}^{\dagger}
+    \end{equation}
+    find $\hat{a}(t)$ and $\hat{a}^{\dagger}(t)$
+    }
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Same process as solving Pb. 1(b), using the result of Pb. 1(e)
+\begin{align}
+    \frac{d}{dt}\hat{a}(t) = -i\omega \hat{a}(t) \Rightarrow \hat{a}(t) = \hat{a}e^{-iwt} \\
+    \frac{d}{dt}\hat{a}^{\dagger}(t) = -i\omega \hat{a}^{\dagger}(t) \Rightarrow \hat{a}^{\dagger}(t) = \hat{a}^{\dagger}e^{iwt}
+\end{align}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%Problem 1.(g)%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}
+    \item [(g)] \textcolor{blue}{
+    Express $\hat{x}(t), \hat{p}(t)$ and the Hamiltonian $H$ in terms of $\har{a}$ and $\hat{a}^\dagger$.
+    }
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+We can use the definition of $\hat{x}(t), \hat{p}(t)$(Eqn. (\ref{eqn:1.5})) in Prob. 1.(c) and replace the result of $\hat{a}(t)$, $\hat{a}^{\dagger}(t)$ into terms of $\hat{a}$ and $\hat{a}^\dagger$.
+Therefore,
+\begin{align}
+    \hat{x}(t) = \sqrt{\frac{1}{2\omega}}\left( \hat{a}(t) + \hat{a}^\dagger(t) \right) = \sqrt{\frac{1}{2\omega}}\left( \hat{a}e^{-iwt} + \hat{a}^\dagger e^{iwt} \right) \\
+    \hat{p}(t) = -i\sqrt{\frac{\omega}{2}}\left( \hat{a}(t) - \hat{a}^\dagger(t) \right) = -i\sqrt{\frac{\omega}{2}}\left( \hat{a}e^{-iwt} - \hat{a}^\dagger e^{iwt} \right)
+\end{align}
+And also using the result of Prob.1(d)
+\begin{align}
+    H & = \omega \left( \hat{a}^\dagger(t)\hat{a}(t) + \frac{1}{2} \right) = \omega \left( \hat{a}^\dagger e^{iwt} \hat{a} e^{-iwt} + \frac{1}{2} \right) \\
+    & = \omega \left( \hat{a}^\dagger\hat{a} + \frac{1}{2} \right)
+\end{align}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%Problem 2.(a)%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\textbf{2. Review : Lorentz Transformation}
+\begin{enumerate}
+    \item [(a)] \textcolor{blue}{
+    Prove that the four-dimensional $\delta$-function
+    \begin{equation}\label{eqn:2.1}
+        \delta^{(4)}(p) = \delta(p^0)\delta(p^1)\delta(p^2)\delta(p^3)
+    \end{equation}
+    is Lorentz invariant, i.e
+    \begin{equation}\label{eqn:2.2}
+        \delta^{(4)}(p) = \delta^{(4)}(\tilde{p})
+    \end{equation}
+    where $\tilde{p}^\mu$ is a Lorentz transformation of $p$.
+    }
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Let $\Lambda^\mu_\nu$ be a Lorentz transformation, then
+\begin{equation}
+      \tilde{p}^\mu = \Lambda^\mu_\nu p^\nu, \quad \tilde{x}^\mu = \Lambda^\mu_\nu x^\nu
+\end{equation}
+And then we have to keep in mind that $\Lambda x \cdot \Lambda p = x \cdot p$ is Lorentz invariant.
+Then, we will make a Fourier transformation to the $\delta$-function
+\begin{equation}
+    \delta^{(4)}(p) = \frac{1}{(2\pi)^4} \int d^4 x e^{i x \cdot p} =  \frac{1}{(2\pi)^4} \int d^4 x e^{i \Lambda x \cdot \Lambda p}
+\end{equation}
+Since the property of the Lorentz transformation that:
+\begin{align}
+    \Lambda^T \eta \Lambda = \eta & \Rightarrow \det \Lambda^T \det \Lambda = (\det \Lambda)^2 = 1 \\
+    & \Rightarrow J = |\det \Lambda| = 1
+\end{align}
+So,
+\begin{equation}
+    d^4\tilde{x} = d^4 x
+\end{equation}
+That makes the $\delta$-function,
+\begin{equation}
+     \frac{1}{(2\pi)^4} \int d^4 x e^{i \Lambda x \cdot \Lambda p} =  \frac{1}{(2\pi)^4} \int d^4 \tilde{x} e^{i \tilde{x} \cdot \tilde{p}}
+\end{equation}
+which is the $\delta$-function of $\tilde{p}$.
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%Problem 2.(b)%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}
+    \item [(b)] \textcolor{blue}{
+    Show that
+    \begin{equation}\label{eqn:2.3}
+        \omega_1 \delta^{(3)}(\vec{k}_1 - \vec{k}_2)
+    \end{equation}
+    is Lorentz invariant, i.e
+    \begin{equation}\label{eqn:2.4}
+        \omega_1 \delta^{(3)}(\vec{k}_1 - \vec{k}_2) = \omega_1' \delta^{(3)}(\vec{k}'_1 - \vec{k}'_2)
+    \end{equation}
+    where $\vec{k}_1$ and $\vec{k}_2$ are respectively the spatial part of four-vectors $k^\mu_1 = (w_1, \vec{k}_1)$ and $k^\mu_2 = (w_2, \vec{k}_2)$ which satisfy the on-shell condition
+    \begin{equation}\label{eqn:2.5}
+        k^2_1 = k^2_2 = -m^2
+    \end{equation}
+    $k'^\mu_1  = (w'_1, \vec{k}'_1)$ and $k'^\mu_2 = (w'_2, \vec{k}'_2)$ are related to $k^\mu_1, k^\mu_2$ by a same Lorentz transformation.
+    }
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Since for the given condition that $k^\mu$s are in on-shell, it gives us the mass-shell condition
+\begin{equation}
+    \delta(k^2 + m^2)
+\end{equation}
+We will use the property of $\delta$-function to show the Lorentz invariance.
+\begin{equation}
+    \delta(f(x)) = \sum_{x_i = 0\  s.t \ f(x_i) = 0} \frac{1}{|f'(x_i)|}\delta(x-x_i)
+\end{equation}
+We modify the mass-shell condition;
+\begin{align}
+    \delta(k^2 + m^2) & = \delta(-k^2_0 + \vec{k}^2 + m^2) \\
+    & = \delta(-k^2_0 + w^2_{\vec{k}}) \\
+    & = \delta((-k_0 + |w_{\vec{k}}|)(k_0 + |w_{\vec{k}}|)) \\
+    & = \frac{1}{2|\omega_{\vec{k}}|} \left[ \delta(k_0 - |\omega_{\vec{k}}|) + \delta(k^0 + |\omega_{\vec{k}}|) \right]
+\end{align}
+where $\omega_{\vec{k}}$ comes from the energy relationship, $\omega^2 = \vec{k}^2 + m^2$.
+We assume that $\omega_{\vec{k}} > 0$\\
+We can pick out the $k^0_1 = \omega_{\vec{k}_1}$ enforcing $\delta(k^2_1 + m^2)$ by multiplying both sides by $\theta(\omega_{\vec{k}_1})$.
+\begin{align}
+    \theta(\omega_{\vec{k}_1})\delta(k^2_1 + m^2) & = \frac{1}{2|\omega_{\vec{k}_1}|} \theta(\omega_{\vec{k}_1})\left[ \delta(k^0_1 - |\omega_{\vec{k}_1}|) + \delta(k^0_1 + |\omega_{\vec{k}_1}|) \right] \\
+    & = \frac{1}{2\omega_{\vec{k}_1}} \theta(\omega_{\vec{k}_1})\delta(k^0_1 - \omega_{\vec{k}_1}) \\
+    & = \frac{1}{2\omega_{\vec{k}_1}} \delta(k^0_1 - \omega_{\vec{k}_1})
+\end{align}
+Then, we multiply both sides by $2\omega_{\vec{k}_1} \delta^{(3)}(\vec{k}_1 - \vec{k}_2)$
+\begin{align}
+    2\omega_{\vec{k}_1} \delta^{(3)}(\vec{k}_1 - \vec{k}_2)\theta(\omega_{\vec{k}_1})\delta(k^2_1 + m^2) & = 2\omega_{\vec{k}_1} \delta^{(3)}(\vec{k}_1 - \vec{k}_2) \cdot \frac{1}{2\omega_{\vec{k}}} \delta(k^0_1 - \omega_{\vec{k}_1}) \\
+    & = \delta^{(3)}(\vec{k}_1 - \vec{k}_2)\delta(k^0_1 - \omega_{\vec{k}_1}) \\
+    & = \delta^{(3)}(\vec{k}_1 - \vec{k}_2)\delta(k^0_1 - \omega_{\vec{k}_2}) \\
+    & = \delta^{(3)}(\vec{k}_1 - \vec{k}_2)\delta(k^0_1 - k^0_2)
+\end{align}
+
+In eqn.(77), we use that the $\delta^{(3)}(\vec{k}_1 - \vec{k}_2)$ allows us to replace $\omega_{\vec{k}_1}$ to $\omega_{\vec{k}_2}$
+For this step, it is crucial that $sign(\omega_{\vec{k}_1}) = sign(\omega_{\vec{k}_2})$, which is true since both are positive.
+
+Finally, from eqn.(78), the right-handed side is Lorentz invariant, since we show that in Prob.2(a).
+On the left-handed side, we already know that $\delta(k^2_1 + m^2)$ is a Lorentz scalar since $k^2_1$ is Lorentz invariant, and $\theta(\omega_{\vec{k}_1})$ is Lorentz invariant since the energy of a particle does not change under Lorentz transformation. 
+Therefore, we can say that $\omega_{\vec{k}_1}\delta^{(3)}(\vec{k}_1 - \vec{k}_2)$ is Lorentz invariant to satisfy both sides.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%Problem 2.(c)%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}
+    \item [(c)] \textcolor{blue}{
+    For any function $f(k) = f(k^0, k^1, k^2, k^3)$, prove that
+    \begin{equation}\label{eqn:2.6}
+        \int \frac{d^3 \vec{k}}{(2\pi)^3} \frac{1}{2\omega_{\vec{k}}} f(k), \quad \omega_{\vec{k}} = \sqrt{\vec{k}^2 + m^2}
+    \end{equation}
+    is Lorentz invariant in the sense that
+    \begin{equation}\label{eqn:2.7}
+        \int \frac{d^3 \vec{k}}{(2\pi)^3} \frac{1}{2\omega_{\vec{k}}} f(k) = \int \frac{d^3 \vec{k}}{(2\pi)^3} \frac{1}{2\omega_{\vec{k}}} f(\tilde{k})
+    \end{equation}
+    where $\tilde{k}^\mu = \Lambda^\mu_\nu k^\nu$ is a Lorentz transformation of $k^\mu$
+    }
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Since the momentum is on the mass-shell, $f(k) = f(\omega_{\vec{k}},\vec{k})$
+So, the integral over the spatial part can be written as;
+\begin{align}
+    \int \frac{d^3 \vec{k}}{(2\pi)^3} \frac{1}{2\omega_{\vec{k}}} f(k) & = \int \frac{d^3 \vec{k}}{(2\pi)^3} \frac{1}{2\omega_{\vec{k}}} f(\omega_{\vec{k}},\vec{k}) \\
+    & = \int \frac{d^3 \vec{k}}{(2\pi)^3} \frac{1}{2\omega_{\vec{k}}} \delta(k^0 - \omega_{\vec{k}}) f(k^0,\vec{k}) \\
+    & = \frac{1}{(2\pi)^3}\int d^4k \  \theta(\omega_{\vec{k}})\delta(k^2 + m^2) f(k^0,\vec{k})
+\end{align}
+Then, Lorentz transformation follows the property below:
+$$
+d^4 k = d^4\tilde{k}, \quad \theta(\omega_{\vec{k}}) = \theta(\omega_{\vec{k}'}), \quad \delta(k^2+m^2) = \delta(k'^2+m^2)
+$$
+The integral is noted as:
+\begin{align}
+    \int \frac{d^3 \vec{k}}{(2\pi)^3} \frac{1}{2\omega_{\vec{k}}} f(k) & = \frac{1}{(2\pi)^3}\int d^4k \  \theta(\omega_{\vec{k}})\delta(k^2 + m^2) f(k^0,\vec{k}) \\
+    & = \frac{1}{(2\pi)^3}\int d^4k' \  \theta(\omega_{\vec{k}'})\delta(k'^2 + m^2) f((\Lambda k')^\mu) \\
+    & = \int \frac{d^3\vec{k}}{(2\pi)^3} \frac{1}{2\omega_{\vec{k}}} f(\Lambda k) \\
+    & = \int \frac{d^3\vec{k}}{(2\pi)^3} \frac{1}{2\omega_{\vec{k}}} f(\tilde{k})
+\end{align}
+So, $\int \frac{d^3 \vec{k}}{(2\pi)^3} \frac{1}{2\omega_{\vec{k}}} f(k)$ is Lorentz invariant.
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%Problem 3%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\textbf{3. A Complex Scalar field}\\
+\textcolor{blue}{
+Consider the field theory of a complex value scalar field $\phi(x)$ with action
+\begin{equation}\label{eqn:3.1}
+    S = \int d^4 x \ \left[ -\partial_\mu \phi^* \partial^\mu \phi - V(|\phi|^2) \right], \quad |\phi|^2 = \phi \phi^*
+\end{equation}
+One could either consider the real and imaginary parts of $\phi$, or $\phi$ and $\phi^*$ as independent dynamical variables. The latter is more convenient in most situations.
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%Problem 3.(a)%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}
+    \item [(a)] \textcolor{blue}{
+    Check action (\ref{eqn:3.1}) is Lorentz invariant ($\phi(x) \to \phi'(x') = \phi(x)$) and find the equations of motion.
+    }
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Lorentz transformation acts as $\phi \to \phi^*$, such that $\phi'(x) = \phi(\Lambda^{-1} x)$
+Then the action transforms like;
+\begin{align}
+    S  \to S' & = \int d^4 x \ \left[ -\partial_\mu \phi'^*(x) \partial^\mu \phi'(x) - V(|\phi'(x)|^2) \right] \\
+    & = \int d^4 x \ \left[ -\partial_\mu \phi^*(\Lambda^{-1}x) \partial^\mu \phi(\Lambda^{-1}x) - V(|\phi(\Lambda^{-1}x)|^2) \right]
+\end{align}
+From the Prob.2(a), we know that $d^4x = d^4x'$.
+Use the chain rule for modifying the derivative that $\partial_\mu = (\Lambda^{-1})^\nu_\mu\partial'_\nu$.
+\begin{align}
+    S' & = \int d^4 x' \ \left[-(\Lambda^{-1})^\nu_\mu\partial'_\nu \phi^*(x') (\Lambda^{-1})^\mu_\rho\partial'^\rho \phi(x') - V(|\phi(x')|^2) \right] \\
+    & = \int d^4 x' \ \left[-( \Lambda^{-1})^\nu_\mu(\Lambda^{-1})^\mu_\rho \partial'_\nu \phi^*(x') \partial'^\rho \phi(x') - V(|\phi(x')|^2) \right] \\
+    & = \int d^4 x' \ \left[-( \delta^\nu_\rho \partial'_\nu \phi^*(x') \partial'^\rho \phi(x') - V(|\phi(x')|^2) \right] \\
+    & = \int d^4 x' \ \left[-( \partial'_\nu \phi^*(x') \partial'^\nu \phi(x') - V(|\phi(x')|^2) \right] \\
+    & = S
+\end{align}
+where we can use the property of the Lorentz transformation:
+$$ (\Lambda^{-1})^\nu_\mu(\Lambda^{-1})^\mu_\rho = ((\Lambda^{-1})^T)^\nu_\mu(\Lambda^{-1})^\mu_\rho = \Lambda^\nu_\mu(\Lambda^{-1})^\mu_\rho = \delta^\nu_\rho$$
+Therefore, the action is Lorentz invariant. \\
+For the equation of motions, we have to calculate Euler-Lagrangian equation for $\phi$ and $\phi^*$ independently
+\begin{equation}
+\begin{cases}
+     \partial_\mu \frac{\partial \mathcal{L}}{\partial (\partial_\mu \phi)} = \frac{\partial \mathcal{L}}{\partial \phi} & \mbox{(i)}\\
+     \\
+    \partial_\mu \frac{\partial \mathcal{L}}{\partial (\partial_\mu \phi^*)} = \frac{\partial \mathcal{L}}{\partial \phi^*} & \mbox{(ii)}
+\end{cases}
+\end{equation}
+where $\mathcal{L} =  -\partial_\mu \phi'^*(x) \partial^\mu \phi'(x) - V(|\phi'(x)|^2 $, for $\mbox{(i)}$;
+\begin{align}
+     \partial_\mu \frac{\partial \mathcal{L}}{\partial (\partial_\mu \phi)} & = \partial_\mu \frac{\partial}{\partial (\partial_\mu \phi)}\left[ -\partial_\nu \phi^* \partial^\nu \phi - V(|\phi|^2) \right] \\
+    & = \partial_\mu (-\partial_\nu \phi^* \delta^\nu_\mu) \\
+    & = -\partial^2\phi^* \\
+    \frac{\partial \mathcal{L}}{\partial \phi} & = \frac{\partial}{\partial \phi} (-V(|\phi|^2) ) \\
+    & = -V'(|\phi|^2) \phi^*
+\end{align}
+Then, by Euler-Lagrangian equation
+\begin{equation}
+    \partial^2\phi^* -V'(|\phi|^2) \phi^* = 0
+\end{equation}
+Same sequence for $\mbox{(ii)}$, we can get
+\begin{equation}
+    \partial^2\phi -V'(|\phi|^2) \phi = 0
+\end{equation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%Problem 3.(b)%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}
+    \item [(b)] \textcolor{blue}{
+    Find the cancnonical conjugate momenta for $\phi$ and $\phi^*$, and the Hamiltonian $H$ for eqn.(\ref{eqn:3.1})
+    }
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+We can expand the 4-derivative$\partial_\mu$ to time and space derivative, that makes the Lagrangian $\mathcal{L}$ into :
+\begin{equation}
+    \mathcal{L} = \partial_t \phi^* \partial^t \phi - \vec{\nabla}\phi^* \cdot \vec{\nabla}\phi - V(|\phi|^2)
+\end{equation}
+Therefore, the canonical conjugate momenta becomes:
+\begin{equation}
+    \pi := \frac{\partial \mathcal{L}}{\partial (\partial_t \phi)} = \partial_t \phi^*, \quad \pi^* := \frac{\partial \mathcal{L}}{\partial (\partial_t \phi^*)} = \partial_t \phi
+\end{equation}
+So the Hamiltonian is:
+\begin{align}
+    H & = \int d^3 x \left[ \pi \cdot \partial_t\phi +\pi^* \cdot \partial_t\phi^* - \mathcal{L} \right] \\
+    & = \int d^3 x \left[ 2 \pi^*\pi - \pi^*\pi + \vec{\nabla}\phi^* \cdot \vec{\nabla}\phi + V(|\phi|^2\right] \\
+    & = \int d^3 x \left[ \pi^*\pi + \vec{\nabla}\phi^* \cdot \vec{\nabla}\phi + V(|\phi|^2) \right]
+\end{align}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%Problem 3.(c)%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}
+    \item [(c)] \textcolor{blue}{
+    The action is invariant under transformation
+    \begin{equation}\label{eqn:3.2}
+        \phi \to e^{i\alpha} \phi, \quad \phi^* \to e^{-i\alpha} \phi^*
+    \end{equation}
+    for arbitrary constant $\alpha$. When $\alpha$ is small, $\mbox{i.e.}$ for an infinitesimal transformation, eqn.(\ref{eqn:3.2}) become
+    \begin{equation}\label{eqn:3.3}
+        \delta\phi = i\alpha\phi, \quad \delta\phi^* = -i\alpha \phi^*
+    \end{equation}
+    Use Noether's theorem to find the corresponding conserved current $j^\mu$ and conserved change $Q$.
+    }
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Noether's theorem states that very continuous symmetry of the action of a physical system with conservative forces has a corresponding conservation law.
+So that conserve current is:
+\begin{equation}
+    j^\mu = \frac{\partial \mathcal{L}}{\partial (\partial_\mu \Phi_{a})}\delta\Phi_{a} - \mathcal{F}^\mu \quad \mbox{where} \quad \delta \mathcal{L} = \partial_\mu \mathcal{F}^\mu
+\end{equation}
+Then, use the infinitesimal transformation the conserved current is
+\begin{align}
+    j^\mu & = -\partial^\mu \phi^*(i\alpha\phi) - \partial^\mu \phi (-i\alpha\phi^*) \\
+    & = i\alpha(\phi^* \partial^\mu \phi - \phi \partial^\mu \phi^*)
+\end{align}
+we can remove that proportional constant to simplify the current
+\begin{equation}
+    j^\mu = \phi^* \partial^\mu \phi - \phi \partial^\mu \phi^*
+\end{equation}
+Then the corresponding charge is
+\begin{equation}
+    Q = \int d^3x \ j^0 = \int d^3 x (\phi^* \partial_t \phi - \phi \partial_t \phi^*)
+\end{equation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%Problem 3.(d)%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}
+    \item [(d)] \textcolor{blue}{
+    Use the equations of motion of part (a) to verify directly that $j^\mu$ is indeed conserved.
+    }
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Using the equation of motion, the conservation of the current can be checked with caculating the derivative:
+\begin{align}
+    \partial_\mu j^\mu & = \partial_\mu  (\phi^* \partial_t \phi - \phi \partial_t \phi^*) \\
+    & = \phi^* \partial^2\phi - \phi \partial^2 \phi^* \\
+    & = V'(|\phi|^2)\phi^*\phi -  V'(|\phi|^2)\phi^*\phi \\
+    & = 0
+\end{align}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%Problem 4%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\textbf{4. The energy-momentum tensor for the complex scalar field theory}\\
+\textcolor{blue}{
+In this problem, we work out the energy-momentum tensor of the complex scalar theory (\ref{eqn:3.1}).
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%Problem 4.(a)%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}
+    \item [(a)] \textcolor{blue}{
+    Under a spacetime translation
+    \begin{equation}\label{eqn:4.1}
+        x^\mu \to x'^\mu = x^\mu + a^\mu
+    \end{equation}
+    a scalar field transform as
+    \begin{equation}\label{eqn:4.2}
+        \phi'(x') = \phi(x)
+    \end{equation}
+    Show that the action (\ref{eqn:3.1}) is invariant under transformation $\phi(x) \to \phi'(x)$.
+    }
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Under the transformation, the scalar field satisfies $\phi'(x) = \phi(x-a)$.
+Then the action transforms:
+\begin{align}
+    S \to S' & = \int d^4 x (-\partial_\mu \phi'^*(x) \partial^\mu \phi'(x) - V(|\phi'(x)|^2) \\
+    & = \int d^4x  (-\partial_\mu \phi^*(x-a) \partial^\mu \phi(x-a) - V(|\phi(x-a)|^2) \\
+    & = \int d^4x  (-\partial_\mu \phi^*(x) \partial^\mu \phi(x) - V(|\phi(x)|^2) = S
+\end{align}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%Problem 4.(b)%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}
+    \item [(b)] \textcolor{blue}{
+    Write down the transformation of the scalar fields $\phi$ and $\phi^*$ for an infinitesimal translation, and use Noether's theorem to find the corresponding conserved currents $T^{\mu\nu}$.
+    }
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+An infinitesimal transformation makes the field:
+\begin{align}
+    \delta\phi & = \phi'(x) - \phi(x) = \phi(x-a) - \phi(x) = -a^\mu \partial_\mu \phi(x)\\
+    \delta\phi^* & = \phi'^*(x) - \phi^*(x) = \phi^*(x-a) - \phi^*(x) = -a^\mu \partial_\mu \phi^*(x)
+\end{align}
+Then, the Lagrangian density under translation gives the infinitesimal variance:
+\begin{align}
+    \delta\mathcal{L} & = \mathcal{L}' - \mathcal{L} \\
+    & = - \partial_\nu(\phi^*(x) - a^\mu\partial_\mu\phi^*(x)) \partial^\nu (\phi(x) - a^\mu\partial_\mu\phi(x)) \\
+    & \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad 
+    - V\left( (\phi^*(x) - a^\mu\partial_\mu\phi^*(x)(\phi(x) - a^\mu\partial_\mu\phi(x)))  \right) - \mathcal{L} \\
+    & = a^\mu(\partial_\nu\partial_\mu \phi^*(x) \partial^\nu \phi(x) + \partial_\nu \phi^* \partial^\nu \partial_\mu \phi(x)) + a^\mu V'(|\phi|^2)(\partial_\mu\phi^* \phi+\phi^* \partial_\mu\phi) + \mathcal{O}(a^\mu a^\nu) \\
+    & = -a^\mu \partial_\mu \mathcal{L} \\
+    & = a_\mu \partial_\nu (-\eta^{\mu\nu} \mathcal{L}) := a_\mu \partial_\nu \mathcal{F}^{\mu\nu}
+\end{align}
+Translations are parameterize with 4-vector $a^\mu$, and we have a Noether current itself a 4-vector.
+Therefore, the conserved currents are encoded in the 2-rank tensor, $\mathcal{T}^{\mu\nu}$.
+\begin{align}
+    T^{\mu\nu} := (j^\mu)^\nu & = \frac{\partial \mathcal{L}}{\partial (\partial_\mu \phi)}(\delta\phi)^\mu + \frac{\partial \mathcal{L}}{\partial (\partial_\mu \phi^*)}(\delta\phi^*)^\mu - \mathcal{F}^{\mu\nu} \\
+    & = - \partial^\nu \phi^* (-\partial^\mu \phi) - \partial^\nu\phi(\partial^\mu\phi^*) + \eta^{\mu\nu}\mathcal{L} \\
+    & =  \partial^\nu \phi^* \partial^\mu \phi + \partial^\nu\phi \partial^\mu\phi^* - \eta^{\mu\nu}\left[\partial_\rho \phi^* \partial^\rho \phi + V(|\phi|^2) \right]
+\end{align}
+In the following, we let the first index $\mu$ of $T^{\mu\nu}$ pick out the direction of translation $a^\mu$
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%Problem 4.(c)%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}
+    \item [(c)] \textcolor{blue}{
+    The conserved charge for a time translation
+    \begin{equation}\label{eqn:4.3}
+        H = \int d^3x T^{00}
+    \end{equation}
+    should be identified with the total energy of the system, while that for a spatial translation
+    \begin{equation}\label{eqn:4.4}
+        P^i = \int d^3x T^{0i}
+    \end{equation}
+    should be identified with the total momentum. Thus, $T^{\mu\nu}$ is referred to as the energy-momentum tensor. Write down the explicit expression for $H$ and $P^i$. Compare $H$ obtained here with the Hamiltonian of prob.3(b).
+    }
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The Hamiltonian is:
+\begin{align}
+    H & = \int d^3x T^{00} \\
+    & = \int d^3x \left[ 2\partial^t \phi^* \partial^t \phi - \eta^{00}(\partial_\mu \phi^* \partial^\mu \phi + V(|\phi|^2)) \right] \\
+    & = \int d^3x \left[ 2\partial^t \phi^* \partial^t \phi + (-\partial_t \phi^* \partial_t \phi + \vec{\nabla}\phi^* \cdot \vec{\nabla}\phi + V(|\phi|^2)) \right] \\
+    & =\int d^3x \left[ \partial^t \phi^* \partial^t \phi + \vec{\nabla}\phi^* \cdot \vec{\nabla}\phi + V(|\phi|^2)) \right]
+\end{align}
+And the total momentum is:
+\begin{align}
+    P^{i} & = \int d^3x T^{0i} \\
+    & = \int d^3x \left[ \partial^t \phi^* \partial^i \phi + \partial^i\phi^* \partial^t\phi - \eta^{0i}(\partial_\rho \phi^* \partial^\rho \phi + V(|\phi|^2) ) \right] \\
+    & = \int d^3x \left[ \partial^t \phi^* \partial^i \phi + \partial^i\phi^* \partial^t\phi \right] \\
+    & = - \int d^3x \left[ \partial_t \phi^* \partial_i \phi + \partial_i\phi^* \partial_t\phi \right]
+\end{align}
+The expression of Hamiltonian is same as prob.3(b).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%Problem 4.(d)%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}
+    \item [(d)] \textcolor{blue}{
+    Use equations of motion of prob.3(a) to verify directly that $T^{\mu\nu}$ is indeed conserved.
+    }
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The equations of motion are:
+\begin{equation}
+    \begin{cases}
+        \partial^2\phi^* - V'(|\phi|^2) \phi^* = 0 \\
+        \partial^2\phi - V'(|\phi|^2) \phi = 0
+    \end{cases}
+\end{equation}
+Recall that $\mu$ indicates the direction of translation $a^\mu$.
+Therefore, conservation from the Noether's theorem means that $\partial_\nu T^{\mu\nu}$.
+Caring the results from prob.4(c), $T^{\mu\nu}$ is symmetric so that we can contract the derivative with respect to either index.
+\begin{align}
+    \partial_\mu T^{\mu\nu} & = \partial_\mu(\partial^\nu \phi^* \partial^\mu \phi + \partial^\mu\phi^*\partial^\nu\phi - \eta^{\mu\nu}\left[\partial_\rho \phi^* \partial^\rho \phi + V(|\phi|^2) \right]) \\
+    & = \partial_\mu(\partial^\nu \phi^* \partial^\mu \phi + \partial^\mu\phi^*\partial^\nu\phi ) -\partial^\nu(\partial_\rho \phi^* \partial^\rho \phi) - \partial^\nu V(|\phi|^2) \\
+    & = \partial^2\phi^* \partial^\nu\phi + \partial^\nu\phi^* \partial^2\phi - \partial^\nu V(|\phi|^2) \\
+    & = V'(|\phi|^2) \phi^* \partial^\nu\phi + \partial^\nu\phi^* V'(|\phi|^2) \phi - V'(|\phi|^2) \partial^\nu\phi^* \phi - V'(|\phi|^2) \phi^* \partial^\nu \phi \\
+    & = 0
+\end{align}
+
+\end{document}
+
